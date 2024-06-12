@@ -1,14 +1,17 @@
 import "./App.css";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { CountProvider } from "./contexts/CountContext";
+import Posts from "./components/Posts";
+import { PostProvider } from "./contexts/PostsContext";
 
 function App() {
   return (
     <>
-      {/* CONTEXTO MAIS ORGANIZADO COM O PROVIDER JUNTO AO CONTEXTO */}
-      <CountProvider>
+      <PostProvider>
         <Header />
-      </CountProvider>
+        <Footer />
+        <Posts />
+      </PostProvider>
     </>
   );
 }
