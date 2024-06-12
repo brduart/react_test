@@ -5,7 +5,17 @@ const OnlineUsers = () => {
   //USANDO O CONTEXTO NO COMPONENTE (NOME DO CONTEXTO)
   const count = useContext(CountContext);
 
-  return <p>Online {count}</p>;
+  //FUNÇÃO PARA ATUALIZAR O STATE DO CONTEXT
+  const handleZero = () => {
+    count?.setOnlineCount(0);
+  };
+
+  return (
+    <>
+      <p>Online: {count?.onlineCount}</p>
+      <button onClick={handleZero}>Zerar</button>
+    </>
+  );
 };
 
 export default OnlineUsers;
