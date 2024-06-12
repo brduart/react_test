@@ -1,28 +1,16 @@
 import "./App.css";
-
-import axios from "axios";
+import { api } from "./utils/api";
 
 function App() {
   const handleAddPost = async () => {
-    /*  const res = await axios.post("https://jsonplaceholder.typicode.com/posts", {
-      userId: 98,
-      title: "Titulo",
-      body: "Corpo do post",
+    //AXIOS COMO INSTÂNCIA
+    const res = await api.post("/posts", {
+      userId: 10,
+      title: "titulo",
+      body: "conteudo",
     });
 
-    /*  const res = await axios.put("https://jsonplaceholder.typicode.com/posts", {
-      userId: 98,
-      title: "Titulo",
-      body: "Corpo do post",
-    });
-
-    /*  const res = await axios.delete("https://jsonplaceholder.typicode.com/posts", {
-      userId: 98,
-      title: "Titulo",
-      body: "Corpo do post",
-    });
-
-    console.log(res);*/
+    console.log(res);
   };
 
   return (
