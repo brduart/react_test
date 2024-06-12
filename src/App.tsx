@@ -5,9 +5,17 @@ import axios from "axios";
 function App() {
   const handleGetPosts = () => {
     //REQUISIÇÃO GET
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
-      console.log(res.data);
-    });
+    axios
+      .get("https://jsonplaceholder.typicode.com/comments", {
+        //AXIOS USANDO QUERY STRINGS
+        params: {
+          postId: 1,
+          sort: "desc",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
