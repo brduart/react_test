@@ -3,19 +3,20 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  const handleGetPosts = () => {
+  //FUNÇÃO ASYNC/AWAIT
+  const handleGetPosts = async () => {
     //REQUISIÇÃO GET
-    axios
-      .get("https://jsonplaceholder.typicode.com/comments", {
+    const res = await axios.get(
+      "https://jsonplaceholder.typicode.com/comments",
+      {
         //AXIOS USANDO QUERY STRINGS
         params: {
           postId: 1,
           sort: "desc",
         },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+      }
+    );
+    console.log(res.data);
   };
 
   return (
