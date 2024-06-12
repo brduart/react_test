@@ -3,31 +3,29 @@ import "./App.css";
 import { api } from "./utils/api";
 
 function App() {
-  const input = useRef<HTMLInputElement>(null);
+  //CONTROLADOR (fetchAPI)
+  const controller = new AbortController();
 
-  //FORMDATA COM AXIOS
+  const handleCancelRequest = async () => {
+    //CANCELA TODAS AS REQUISIÇÕES LIGADAS AO CONTROLLER
+    controller.abort();
+  };
 
-  const handleSendFile = async () => {
-    if (input.current?.files && input.current?.files.length > 0) {
-      const file = input.current.files[0];
-
-      const data = new FormData();
-      data.append("name", "name");
-      data.append("file", file);
-
-      const res = await api.post("/", data, {
-        //NÃO É OBRIGATORIO
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+  const handleStartRequest = async () => {
+    try {
+      const res = await api.get("URL", {
+        //CONECTANDO AO CONTROLADOR
+        signal: controller.signal,
       });
-      console.log(res.data);
+    } catch (error) {
+      console.log("erro");
     }
   };
+
   return (
     <>
-      <input type="file" ref={input} />
-      <button onClick={handleSendFile}></button>
+      <button onClick={handleStartRequest}>START</button>
+      <button onClick={handleCancelRequest}>CANCEL</button>
     </>
   );
 }
