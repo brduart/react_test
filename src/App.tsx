@@ -1,31 +1,15 @@
-import { useRef } from "react";
 import "./App.css";
-import { api } from "./utils/api";
+import Header from "./components/Header";
+import { CountContext, CountInitialData } from "./contexts/CountContext";
 
 function App() {
-  //CONTROLADOR (fetchAPI)
-  const controller = new AbortController();
-
-  const handleCancelRequest = async () => {
-    //CANCELA TODAS AS REQUISIÇÕES LIGADAS AO CONTROLLER
-    controller.abort();
-  };
-
-  const handleStartRequest = async () => {
-    try {
-      const res = await api.get("URL", {
-        //CONECTANDO AO CONTROLADOR
-        signal: controller.signal,
-      });
-    } catch (error) {
-      console.log("erro");
-    }
-  };
-
   return (
     <>
-      <button onClick={handleStartRequest}>START</button>
-      <button onClick={handleCancelRequest}>CANCEL</button>
+      {/*CRIAÇÃO DO PROVIDER DO CONTEXTO E O VALOR PADRÃO INICIAL DO CONTEXTO - 
+      TODOS OS COMPONENTES DENTRO DE HEADER PODERÃO RECEBER O VALOR DO CONTEXTO*/}
+      <CountContext.Provider value={CountInitialData}>
+        <Header />
+      </CountContext.Provider>
     </>
   );
 }
