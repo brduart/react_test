@@ -1,21 +1,33 @@
+import { useRef } from "react";
 import "./App.css";
 import { api } from "./utils/api";
 
 function App() {
-  const handleAddPost = async () => {
-    //AXIOS COMO INSTÂNCIA
-    const res = await api.post("/posts", {
-      userId: 10,
-      title: "titulo",
-      body: "conteudo",
-    });
+  const input = useRef<HTMLInputElement>(null);
 
-    console.log(res);
+  //FORMDATA COM AXIOS
+
+  const handleSendFile = async () => {
+    if (input.current?.files && input.current?.files.length > 0) {
+      const file = input.current.files[0];
+
+      const data = new FormData();
+      data.append("name", "name");
+      data.append("file", file);
+
+      const res = await api.post("/", data, {
+        //NÃO É OBRIGATORIO
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res.data);
+    }
   };
-
   return (
     <>
-      <button onClick={handleAddPost}>POST</button>
+      <input type="file" ref={input} />
+      <button onClick={handleSendFile}></button>
     </>
   );
 }
