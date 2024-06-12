@@ -1,28 +1,48 @@
-import { useEffect } from "react";
+import { useReducer } from "react";
 import "./App.css";
+import { listReducer } from "./reducers/listReducer";
 
 function App() {
-  useEffect(() => {
-    //LÓGICA AQUI
+  const [list, dispatch] = useReducer(listReducer, []);
+  //DECLARAÇÃO DO REDUCER NO COMPONENTE (NOME DA FUNÇÃO REDUCER, VALOR INICIAL)
 
-    //CLEANUP PARA FINALIZAR EFFECTS CONTÍNUOS
-    return () => {
-      console.log("Cleanup Ok!");
-    };
-  }, []);
+  //FUNÇÃO PARA EXECUTAR A ACTION
+  const handleAddClick = () => {
+    dispatch({
+      type: "add",
+      payload: {
+        text: "Novo",
+      },
+    });
+  };
 
-  useEffect(() => {
-    //Ex: ADICIONANDO LISTENER DE SCROLL
+  dispatch({
+    type: "remove",
+    payload: {
+      id: 10,
+    },
+  });
 
-    window.addEventListener("scroll", () => {});
+  dispatch({
+    type: "toggleDone",
+    payload: {
+      id: 10,
+    },
+  });
 
-    //CLEANUP PARA FINALIZAR LISTENER DE SCROLL
-    return () => {
-      window.removeEventListener("scroll", () => {});
-    };
-  }, []);
+  dispatch({
+    type: "editText",
+    payload: {
+      id: 1,
+      newText: "new text",
+    },
+  });
 
-  return <></>;
+  return (
+    <>
+      <button onClick={handleAddClick}></button>
+    </>
+  );
 }
 
 export default App;

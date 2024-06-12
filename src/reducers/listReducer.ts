@@ -8,7 +8,9 @@ type AddAction = {
   }*/
 
   type: "add";
-  payload: string;
+  payload: {
+    text: string;
+  };
   //OU payload: {text: string}
 };
 
@@ -22,21 +24,56 @@ type EditTextAction = {
 
 type ToggleDoneAction = {
   type: "toggleDone";
-  payload: number;
+  payload: {
+    id: number;
+  };
 };
 
 type RemoveAction = {
   type: "remove";
-  payload: number;
+  payload: {
+    id: number;
+  };
 };
 
 type ListActions = AddAction | EditTextAction | ToggleDoneAction | RemoveAction;
 
-export const listReducer = (list: Item[], action: ListActions) => {
+export const listReducer = (list: Item[], action: ListActions): Item[] => {
   //Executar ações
   //action.type; //Ação que será executada
   //action.payload; //Conteúdo a ser adicionado (Carga)
 
+  switch (action.type) {
+    case "add":
+      return [
+        ...list,
+        {
+          id: list.length,
+          text: action.payload.text,
+          done: false,
+        },
+      ];
+
+    case "editText":
+      return list.map((i) => {
+        if (i.id === action.payload.id) {
+          i.text = action.payload.newText;
+        }
+        return i;
+      });
+    case "remove":
+      return list.filter((i) => i.id !== action.payload.id);
+
+    case "toggleDone":
+      return list.map((i) => {
+        if (i.id === action.payload.id) {
+          i.done = !i.done;
+        }
+        return i;
+      });
+    default:
+      return list;
+  }
+
   //Retorna Lista atualizada
-  return list;
 };
