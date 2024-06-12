@@ -3,25 +3,31 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  //FUNÇÃO ASYNC/AWAIT
-  const handleGetPosts = async () => {
-    //REQUISIÇÃO GET
-    const res = await axios.get(
-      "https://jsonplaceholder.typicode.com/comments",
-      {
-        //AXIOS USANDO QUERY STRINGS
-        params: {
-          postId: 1,
-          sort: "desc",
-        },
-      }
-    );
-    console.log(res.data);
+  const handleAddPost = async () => {
+    /*  const res = await axios.post("https://jsonplaceholder.typicode.com/posts", {
+      userId: 98,
+      title: "Titulo",
+      body: "Corpo do post",
+    });
+
+    /*  const res = await axios.put("https://jsonplaceholder.typicode.com/posts", {
+      userId: 98,
+      title: "Titulo",
+      body: "Corpo do post",
+    });
+
+    /*  const res = await axios.delete("https://jsonplaceholder.typicode.com/posts", {
+      userId: 98,
+      title: "Titulo",
+      body: "Corpo do post",
+    });
+
+    console.log(res);*/
   };
 
   return (
     <>
-      <button onClick={handleGetPosts}>GET</button>
+      <button onClick={handleAddPost}>POST</button>
     </>
   );
 }
