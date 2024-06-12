@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useReducer, useState } from "react";
+import { postReducer } from "../reducers/reducer";
 
 type Post = {
   id: number;
@@ -18,10 +19,16 @@ type Props = {
 };
 
 export const PostProvider = ({ children }: Props) => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, dispatch] = useReducer(postReducer, []);
 
   const addPost = (title: string, body: string) => {
-    setPosts([...posts, { id: posts.length, title, body }]);
+    dispatch({
+      type: "add",
+      payload: {
+        title,
+        body,
+      },
+    });
   };
 
   return (
