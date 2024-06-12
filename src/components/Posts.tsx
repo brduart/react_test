@@ -10,6 +10,7 @@ const Posts = () => {
         <>
           <h1>{i.title}</h1>
           <h3>{i.body}</h3>
+          <button onClick={() => posts.removePost(i.id)}>remover</button>
         </>
       ))}
     </div>
