@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useReducer, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { postReducer } from "../reducers/reducer";
 import { Post } from "../types/post";
 
@@ -8,6 +14,8 @@ type PostContentType = {
   removePost: (id: number) => void;
 };
 
+const STORAGE_KEY = "posts";
+
 export const PostContext = createContext<PostContentType | null>(null);
 
 type Props = {
@@ -15,7 +23,16 @@ type Props = {
 };
 
 export const PostProvider = ({ children }: Props) => {
-  const [posts, dispatch] = useReducer(postReducer, []);
+  const [posts, dispatch] = useReducer(
+    postReducer,
+    JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+    //PERSISTINDO DADOS EM LOCAL STORAGE
+  );
+
+  //PERSISTINDO DADOS EM LOCAL STORAGE
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+  }, [posts]);
 
   const addPost = (title: string, body: string) => {
     dispatch({
