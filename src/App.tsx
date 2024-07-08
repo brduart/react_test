@@ -1,50 +1,43 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
 import "./App.css";
 import { SignUpForm } from "./types/SignUpForm";
-import { Input } from "@mui/material";
 
 function App() {
-  //CHAMADA DO HOOK FORM
-  const { control, handleSubmit } = useForm<SignUpForm>();
+  const { register, control } = useForm();
 
-  //FUNÇÃO SUBMIT
-  const handleFormSubmit: SubmitHandler<SignUpForm> = (data) => {
-    console.log(data);
+  const handleSucess = () => {
+    alert("ok");
   };
 
+  const handleError = () => {
+    alert("error");
+  };
   //MONTAGEM DO FORM
   return (
     <>
       <div className="container mx-auto">
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <Controller
-            control={control}
-            name="name"
-            render={({ field, fieldState }) => (
-              <Input
-                {...field}
-                error={fieldState.invalid}
-                style={{ background: "#fff" }}
-              />
-            )}
-            rules={{ required: true, minLength: 2, maxLength: 20 }}
+        <Form
+          control={control}
+          action={"https://jsonplaceholder.typicode.com/posts"}
+          method="post"
+          encType="application/json"
+          onSuccess={handleSucess}
+          onError={handleError}
+        >
+          <input
+            {...register("title", { required: true })}
+            className="mr-3 border border-white p-3 text-black"
           />
-
-          <Controller
-            control={control}
-            name="lastName"
-            render={({ field }) => <Input {...field} />}
+          <input
+            {...register("body", { required: true })}
+            className="mr-3 border border-white p-3 text-black"
           />
-
-          <Controller
-            control={control}
-            name="age"
-            render={({ field }) => <Input {...field} />}
-            rules={{ required: true, min: 18 }}
+          <input
+            {...register("userId", { required: true })}
+            className="border border-white p-3 text-black"
           />
-
-          <input type="submit" value="Enviar" className="text-white" />
-        </form>
+          <button>Enviar</button>
+        </Form>
       </div>
     </>
   );
