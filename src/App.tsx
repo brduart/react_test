@@ -10,6 +10,15 @@ function App() {
     age: z.number().min(18),
   });
 
+  //INFERINDO TIPO
+  type SignUpObject = z.infer<typeof SignUpForm>;
+
+  const obj: SignUpObject = {
+    name: "teste",
+    lastName: "teste",
+    age: 20,
+  };
+
   //TESTE DE VALIDAÇÃO
   SignUpForm.parse({
     name: "teste",
