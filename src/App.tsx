@@ -1,33 +1,45 @@
+import { useForm } from "react-hook-form";
 import "./App.css";
 import { SignUpForm } from "./types/SignUpForm";
 
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const SignUpFormSchema = z.object({
+  name: z.string().min(2).max(20),
+  lastName: z.string().optional(),
+  age: z.number().min(18),
+});
 
 function App() {
-  const SignUpForm = z.object({
-    name: z.string().min(2).max(20),
-    lastName: z.string().min(2).optional(),
-    age: z.number().min(18),
+  const { register, handleSubmit } = useForm({
+    resolver: zodResolver(SignUpFormSchema),
   });
 
-  //INFERINDO TIPO
-  type SignUpObject = z.infer<typeof SignUpForm>;
-
-  const obj: SignUpObject = {
-    name: "teste",
-    lastName: "teste",
-    age: 20,
+  const handleSignUpForm = () => {
+    alert("ok");
   };
-
-  //TESTE DE VALIDAÇÃO
-  SignUpForm.parse({
-    name: "teste",
-    age: 20,
-  });
 
   return (
     <>
-      <div className="container mx-auto"></div>
+      <div className="container mx-auto">
+        <form onSubmit={handleSubmit(handleSignUpForm)}>
+          <input
+            {...register("name")}
+            className="border border-white p-3 m-3 text-black"
+          />
+          <input
+            {...register("lastName")}
+            className="border border-white p-3 m-3 text-black"
+          />
+          <input
+            {...register("age", { valueAsNumber: true })}
+            className="border border-white p-3 m-3 text-black"
+          />
+
+          <input type="submit" value="Cadastrar" className="text-white" />
+        </form>
+      </div>
     </>
   );
 }
