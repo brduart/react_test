@@ -1,44 +1,24 @@
-import { Form, useForm } from "react-hook-form";
 import "./App.css";
 import { SignUpForm } from "./types/SignUpForm";
 
+import { z } from "zod";
+
 function App() {
-  const { register, control } = useForm();
+  const SignUpForm = z.object({
+    name: z.string().min(2).max(20),
+    lastName: z.string().min(2).optional(),
+    age: z.number().min(18),
+  });
 
-  const handleSucess = () => {
-    alert("ok");
-  };
+  //TESTE DE VALIDAÇÃO
+  SignUpForm.parse({
+    name: "teste",
+    age: 20,
+  });
 
-  const handleError = () => {
-    alert("error");
-  };
-  //MONTAGEM DO FORM
   return (
     <>
-      <div className="container mx-auto">
-        <Form
-          control={control}
-          action={"https://jsonplaceholder.typicode.com/posts"}
-          method="post"
-          encType="application/json"
-          onSuccess={handleSucess}
-          onError={handleError}
-        >
-          <input
-            {...register("title", { required: true })}
-            className="mr-3 border border-white p-3 text-black"
-          />
-          <input
-            {...register("body", { required: true })}
-            className="mr-3 border border-white p-3 text-black"
-          />
-          <input
-            {...register("userId", { required: true })}
-            className="border border-white p-3 text-black"
-          />
-          <button>Enviar</button>
-        </Form>
-      </div>
+      <div className="container mx-auto"></div>
     </>
   );
 }
