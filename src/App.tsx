@@ -5,7 +5,7 @@ import Input from "./components/Input";
 
 function App() {
   //CHAMADA DO HOOK FORM
-  const { control, handleSubmit } = useForm<SignUpForm>();
+  const { control, handleSubmit, setValue } = useForm<SignUpForm>();
 
   //FUNÇÃO SUBMIT
   const handleFormSubmit: SubmitHandler<SignUpForm> = (data) => {
@@ -41,6 +41,8 @@ function App() {
 
           <input type="submit" value="Enviar" className="text-white" />
         </form>
+
+        <button onClick={() => setValue("age", 18)}>Definir idade</button>
       </div>
     </>
   );

@@ -14,6 +14,8 @@ const Input = (props: UseControllerProps<SignUpForm>) => {
         } p-3 text-black`}
       />
       {fieldState.error?.type === "required" && <p>campo obrigatorio</p>}
+      {fieldState.error?.type === "min" && <p>campo obrigatorio</p>}
+      {fieldState.error?.type === "max" && <p>campo obrigatorio</p>}
     </div>
   );
 };
