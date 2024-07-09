@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const About = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <div>
       <div>
